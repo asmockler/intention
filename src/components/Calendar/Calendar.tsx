@@ -13,8 +13,8 @@ interface Props {}
 
 const Container = glamorous.div({
   display: 'flex',
-  height: '100vh',
-  padding: '20px 20px 0',
+  minHeight: '100vh',
+  padding: '0 20px',
 });
 
 const DayContainer = glamorous.div({

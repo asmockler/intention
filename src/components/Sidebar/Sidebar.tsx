@@ -12,10 +12,14 @@ interface Props {
 
 const Container = glamorous.div({
   background: '#FAFAFA',
+});
+
+const StickyContainer = glamorous.div({
   display: 'flex',
   flexDirection: 'column',
-  height: '100vh',
   padding: '20px 15px',
+  position: 'sticky',
+  top: 0,
 });
 
 export default function Sidebar({todos}: Props) {
@@ -25,8 +29,10 @@ export default function Sidebar({todos}: Props) {
 
   return (
     <Container>
-      <Heading>Unscheduled</Heading>
-      {todoMarkup}
+      <StickyContainer>
+        <Heading>Unscheduled</Heading>
+        {todoMarkup}
+      </StickyContainer>
     </Container>
   );
 }

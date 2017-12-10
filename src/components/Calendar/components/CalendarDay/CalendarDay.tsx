@@ -18,12 +18,15 @@ const Container = glamorous.div({
 });
 
 const HeadingContainer = glamorous.div({
-  paddingBottom: 15,
+  background: '#fff',
+  padding: '15px 0',
+  position: 'sticky',
+  top: 0,
+  zIndex: 10,
 });
 
 const HoursContainer = glamorous.div({
-  padding: '10px 0 20px',
-  overflowY: 'scroll',
+  padding: '10px 30px 20px 0',
 });
 
 export default function CalendarDay({date}: Props) {
