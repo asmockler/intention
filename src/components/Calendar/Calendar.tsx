@@ -11,7 +11,8 @@ const Container = glamorous.div({
 export default function Calendar() {
   return (
     <Container>
-      <Heading>December 8</Heading>
+      <Heading>December</Heading>
+      <Heading>10</Heading>
     </Container>
   );
 }
