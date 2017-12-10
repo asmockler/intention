@@ -1,15 +1,22 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
+import bind from '../../../../utilities/bind';
 
 interface Props {
   hour: number;
 }
 
-const Container = glamorous.div({
+interface State {
+  isActiveDropzone: boolean;
+}
+
+const Container = glamorous.div<{highlighted: boolean}>({
   display: 'flex',
   height: 60,
   position: 'relative',
-});
+}, ({highlighted}) => ({
+  backgroundColor: highlighted ? '#FAFAFA' : '#FFFFFF',
+}));
 
 const Hour = glamorous.p({
   color: '#777',
@@ -25,13 +32,36 @@ const ContentContainer = glamorous.div({
   flex: '1 0 auto',
 });
 
-export default function CalendarHour({hour}: Props) {
-  const formattedHour = hour < 10 ? `0${hour}` : hour;
+export default class CalendarHour extends React.Component<Props, State> {
+  state = {
+    isActiveDropzone: false,
+  };
 
-  return (
-    <Container>
-      <Hour>{formattedHour}</Hour>
-      <ContentContainer />
-    </Container>
-  );
+  @bind
+  handleDragEnter() {
+    this.setState({isActiveDropzone: true});
+  }
+
+  @bind
+  handleDragLeave() {
+    this.setState({isActiveDropzone: false});
+  }
+
+  render() {
+    const {hour} = this.props;
+    const {isActiveDropzone} = this.state;
+
+    const formattedHour = hour < 10 ? `0${hour}` : hour;
+
+    return (
+      <Container
+        onDragEnter={this.handleDragEnter}
+        onDragLeave={this.handleDragLeave}
+        highlighted={isActiveDropzone}
+      >
+        <Hour>{formattedHour}</Hour>
+        <ContentContainer />
+      </Container>
+    );
+  }
 }

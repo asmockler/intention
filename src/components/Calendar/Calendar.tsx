@@ -40,8 +40,8 @@ export default class Calendar extends React.Component<Props, State> {
     return (
       <Container>
         {visibleDays.map((date) => (
-          <DayContainer>
-            <CalendarDay date={date} key={date.toString()} />
+          <DayContainer key={date.toString()}>
+            <CalendarDay date={date} />
           </DayContainer>
         ))}
       </Container>
