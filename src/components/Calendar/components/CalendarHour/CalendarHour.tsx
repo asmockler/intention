@@ -12,21 +12,25 @@ const Container = glamorous.div({
 });
 
 const Hour = glamorous.p({
-  fontSize: 12,
+  color: '#777',
+  fontFeatureSettings: '"tnum"',
+  fontSize: 9,
   fontWeight: 600,
   margin: '-7px 0 0',
+  width: 30,
 });
 
 const ContentContainer = glamorous.div({
-  borderTop: '1px solid #EEE',
+  borderTop: '1px solid #EAEAEA',
   flex: '1 0 auto',
-  marginLeft: 15,
 });
 
 export default function CalendarHour({hour}: Props) {
+  const formattedHour = hour < 10 ? `0${hour}` : hour;
+
   return (
     <Container>
-      <Hour>{hour}</Hour>
+      <Hour>{formattedHour}</Hour>
       <ContentContainer />
     </Container>
   );
