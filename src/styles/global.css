@@ -8,6 +8,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.draggable-source--is-dragging {
-  visibility: hidden;
+button {
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 }
