@@ -1,6 +1,6 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import bind from '../../utilities/bind';
+import bind from '../../../../utilities/bind';
 
 interface Props {
   id: string;
@@ -67,7 +67,7 @@ export default class TodoPill extends React.Component<Props, State> {
   @bind
   handleDoneClick() {
     const {id, onTodoButtonClick, complete} = this.props;
-    onTodoButtonClick(id, complete);
+    onTodoButtonClick(id, !complete);
   }
 
   render() {

@@ -1,11 +1,15 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import bind from '../../utilities/bind';
+import bind from '../../../../utilities/bind';
 
 import CalendarDay from './components/CalendarDay';
 
 const NUM_DAYS_VISIBLE = 3;
 const DAY_IN_MS = 86400000;
+
+interface Props {
+  loading: boolean;
+}
 
 interface State {
   startDate: Date;
@@ -37,7 +41,7 @@ const Button = glamorous.button<{small?: boolean}>({
   fontWeight: small ? 600 : 900,
 }));
 
-export default class Calendar extends React.Component<{}, State> {
+export default class Calendar extends React.Component<Props, State> {
   state = {
     startDate: new Date(),
   };

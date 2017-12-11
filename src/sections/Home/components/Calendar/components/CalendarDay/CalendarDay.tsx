@@ -1,9 +1,9 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 
-import Heading from '../../../Heading';
+import Heading from '../../../../../../components/Heading';
 
-import { getMonth } from '../../../../utilities/dates';
+import { getMonth } from '../../../../../../utilities/dates';
 
 import CalendarHour from '../CalendarHour';
 

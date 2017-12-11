@@ -1,6 +1,6 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import bind from '../../../../utilities/bind';
+import bind from '../../../../../../utilities/bind';
 
 interface Props {
   hour: number;
