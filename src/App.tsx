@@ -11,14 +11,6 @@ const Container = glamorous.div({
 });
 
 export default class App extends React.Component {
-  componentDidMount() {
-    const root = document.getElementById('root');
-
-    if (root == null) {
-      throw new Error(`Could not find #root.`);
-    }
-  }
-
   render() {
     return (
       <Container>
