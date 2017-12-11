@@ -3,7 +3,10 @@ import glamorous from 'glamorous';
 import bind from '../../utilities/bind';
 
 interface Props {
+  id: string;
   title: string;
+  complete: boolean;
+  onTodoButtonClick(id: string, complete: boolean): void;
 }
 
 interface State {
@@ -32,10 +35,6 @@ const Button = glamorous.button({
   marginRight: 8,
   padding: 0,
   width: 16,
-
-  ':focus': {
-    outline: 'none',
-  },
 }, ({complete}: {complete: boolean}) => ({
   background: complete ? 'white' : 'transparent',
 }));
@@ -67,11 +66,12 @@ export default class TodoPill extends React.Component<Props, State> {
 
   @bind
   handleDoneClick() {
-    this.setState(({complete}) => ({complete: !complete}));
+    const {id, onTodoButtonClick, complete} = this.props;
+    onTodoButtonClick(id, complete);
   }
 
   render() {
-    const {title} = this.props;
+    const {title, complete} = this.props;
     const {isDragging} = this.state;
 
     return (
@@ -82,7 +82,7 @@ export default class TodoPill extends React.Component<Props, State> {
         onDragExit={console.log}
         isDragging={isDragging}
       >
-        <Button onClick={this.handleDoneClick} complete={this.state.complete} />
+        <Button onClick={this.handleDoneClick} complete={complete} />
         <Title>{title}</Title>
       </Container>
     );
