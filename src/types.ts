@@ -1,3 +1,11 @@
+import { QueryProps } from 'react-apollo';
+
+export interface ApolloResponse<T> {
+  data: QueryProps & T;
+}
+
 export interface Todo {
-  title: string,
+  id: string;
+  title: string;
+  markedAsDone: boolean;
 }

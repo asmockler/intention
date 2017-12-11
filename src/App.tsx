@@ -23,7 +23,7 @@ export default class App extends React.Component {
     return (
       <Container>
         <Calendar />
-        <Sidebar todos={[{title: '🥛 Milk'}, {title: '🍳 Eggs'}, {title: '🍞 Bread'}]} />
+        <Sidebar />
       </Container>
     );
   }
