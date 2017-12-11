@@ -1,49 +1,91 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
+import bind from '../../utilities/bind';
 
 import CalendarDay from './components/CalendarDay';
 
 const NUM_DAYS_VISIBLE = 3;
+const DAY_IN_MS = 86400000;
 
 interface State {
-  visibleDays: Date[];
+  startDate: Date;
 }
 
-interface Props {}
-
 const Container = glamorous.div({
-  display: 'flex',
-  minHeight: '100vh',
   padding: '0 20px',
 });
 
-const DayContainer = glamorous.div({
-  flex: '1 1 auto',
+const ControlsContainer = glamorous.div({
+  display: 'flex',
+  justifyContent: 'space-between',
 });
 
-export default class Calendar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+const CalendarContainer = glamorous.div({
+  display: 'flex',
+  minHeight: '100vh',
+});
 
-    const now = new Date();
+const DayContainer = glamorous.div({
+  flex: '1 0 33.333%',
+});
 
-    this.state = {
-      visibleDays: Array(NUM_DAYS_VISIBLE).fill(null).map((_, index) => {
-        return new Date(now.valueOf() + (86400000 * index));
-      }),
-    };
+const Button = glamorous.button<{small?: boolean}>({
+  color: '#007ACE',
+  padding: '12px 0 0',
+}, ({small = false}) => ({
+  fontSize: small ? 14 : 20,
+  fontWeight: small ? 600 : 900,
+}));
+
+export default class Calendar extends React.Component<{}, State> {
+  state = {
+    startDate: new Date(),
+  };
+
+  @bind
+  handlePreviousClick() {
+    this.setState(({startDate}) => ({
+      startDate: new Date(startDate.valueOf() - DAY_IN_MS),
+    }));
+  }
+
+  @bind
+  handleNextClick() {
+    this.setState(({startDate}) => ({
+      startDate: new Date(startDate.valueOf() + DAY_IN_MS),
+    }));
+  }
+
+  @bind
+  handleTodayClick() {
+    this.setState({startDate: new Date()});
   }
 
   render() {
-    const {visibleDays} = this.state;
+    const {startDate} = this.state;
+
+    const calendarDays = Array(NUM_DAYS_VISIBLE).fill(null).map((_, index) => {
+      const date = new Date(startDate.valueOf() + (DAY_IN_MS * index));
+
+      const showMonth = (index === 0) || date.getDate() === 1;
+
+      return (
+        <DayContainer key={date.toString()}>
+          <CalendarDay date={date} showMonth={showMonth} />
+        </DayContainer>
+      );
+    });
 
     return (
       <Container>
-        {visibleDays.map((date) => (
-          <DayContainer key={date.toString()}>
-            <CalendarDay date={date} />
-          </DayContainer>
-        ))}
+        <ControlsContainer>
+          <Button onClick={this.handlePreviousClick}>&larr;</Button>
+          <Button onClick={this.handleTodayClick} small>Today</Button>
+          <Button onClick={this.handleNextClick}>&rarr;</Button>
+        </ControlsContainer>
+        <CalendarContainer>
+          {calendarDays}
+        </CalendarContainer>
       </Container>
     );
   }

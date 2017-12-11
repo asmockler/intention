@@ -9,6 +9,7 @@ import CalendarHour from '../CalendarHour';
 
 interface Props {
   date: Date;
+  showMonth: boolean;
 }
 
 const Container = glamorous.div({
@@ -29,13 +30,15 @@ const HoursContainer = glamorous.div({
   padding: '10px 30px 20px 0',
 });
 
-export default function CalendarDay({date}: Props) {
+export default function CalendarDay({date, showMonth}: Props) {
   const hours = Array(24).fill(null).map((_, index) => <CalendarHour hour={index} key={index} />);
+
+  const title = showMonth ? getMonth(date) : <span>&nbsp;</span>;
 
   return (
     <Container>
       <HeadingContainer>
-        <Heading>{getMonth(date)}</Heading>
+        <Heading>{title}</Heading>
         <Heading>{date.getDate()}</Heading>
       </HeadingContainer>
       <HoursContainer>
