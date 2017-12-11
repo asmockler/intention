@@ -4,5 +4,9 @@ type Todo @model {
   updatedAt: DateTime!
 
   title: String!
-  markedAsDone: Boolean!
+  markedAsDone: Boolean! @defaultValue(value: "false")
+  duration: Int! # Minutes
+    @defaultValue(value: 30)
+    @migrationValue(value: 30)
+  startTime: DateTime
 }
