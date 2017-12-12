@@ -1,4 +1,12 @@
 import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import { ApolloResponse, Todo } from '../../../types';
+
+interface ResponseData {
+  allTodos: Todo[];
+}
+
+export type AllTodosQueryProps = ApolloResponse<ResponseData>;
 
 export const allTodosQuery = gql`
   query AllTodosQuery {
@@ -9,3 +17,5 @@ export const allTodosQuery = gql`
     }
   }
 `;
+
+export default graphql(allTodosQuery);

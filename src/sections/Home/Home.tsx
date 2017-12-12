@@ -1,18 +1,18 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
-import { graphql, compose } from 'react-apollo';
+import { compose } from 'react-apollo';
 import bind from '../../utilities/bind';
 
-import { allTodosQuery } from './graphql/AllTodosQuery';
-import { updateMarkedAsDoneMutation } from './graphql/UpdateMarkedAsDoneMutation';
-import { ApolloResponse, Todo } from '../../types';
+import allTodosQueryDecorator, { AllTodosQueryProps } from './graphql/AllTodosQuery';
+import updateMarkedAsDoneDecorator, { UpdateMarkedAsDoneMutationProps } from './graphql/UpdateMarkedAsDoneMutation';
+import submitTodoDecorator, { SubmitTodoMutationProps } from './graphql/SubmitTodoMutation';
 
 import Sidebar from './components/Sidebar';
 import Calendar from './components/Calendar';
 
-interface ResponseData {
-  allTodos: Todo[];
-}
+type WrappedProps = AllTodosQueryProps
+  & SubmitTodoMutationProps
+  & UpdateMarkedAsDoneMutationProps;
 
 const Container = glamorous.div({
   display: 'grid',
@@ -20,9 +20,11 @@ const Container = glamorous.div({
   paddingLeft: 20,
 });
 
-class Home extends React.Component<ApolloResponse<ResponseData> & {update: any}, {}> {
+class Home extends React.Component<WrappedProps, {}> {
   render() {
-    const {data: {loading, allTodos = []}} = this.props;
+    const {data: {loading, allTodos = [
+      {id: '', title: 'Milk', startTime: null, markedAsDone: false, duration: 15}
+    ]}} = this.props;
 
     const unscheduledTodos = allTodos.filter(({startTime}) => startTime == null);
 
@@ -40,27 +42,14 @@ class Home extends React.Component<ApolloResponse<ResponseData> & {update: any},
 
   @bind
   private updateTodo(id: string, markedAsDone: boolean) {
-    const {update} = this.props;
+    const {updateMarkedAsDone} = this.props;
 
-    update({id, markedAsDone});
+    updateMarkedAsDone(id, markedAsDone);
   }
 }
 
 export default compose(
-  graphql(allTodosQuery),
-  graphql(updateMarkedAsDoneMutation, {
-    props: ({mutate}: any) => ({
-      update: ({id, markedAsDone}: {id: string, markedAsDone: boolean}) => mutate({
-        variables: {id, markedAsDone},
-        optimisticResponse: {
-          __typename: 'Mutation',
-          updateTodo: {
-            __typename: 'Todo',
-            id,
-            markedAsDone,
-          },
-        },
-      }),
-    }),
-  }),
+  allTodosQueryDecorator,
+  updateMarkedAsDoneDecorator,
+  submitTodoDecorator,
 )(Home);
