@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { ApolloResponse, Todo } from '../../../types';
 
-interface ResponseData {
+export interface ResponseData {
   allTodos: Todo[];
 }
 

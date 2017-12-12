@@ -1,17 +1,16 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 import { compose } from 'react-apollo';
-import bind from '../../utilities/bind';
 
 import allTodosQueryDecorator, { AllTodosQueryProps } from './graphql/AllTodosQuery';
 import updateMarkedAsDoneDecorator, { UpdateMarkedAsDoneMutationProps } from './graphql/UpdateMarkedAsDoneMutation';
-import submitTodoDecorator, { SubmitTodoMutationProps } from './graphql/SubmitTodoMutation';
+import createTodoDecorator, { CreateTodoMutationProps } from './graphql/SubmitTodoMutation';
 
 import Sidebar from './components/Sidebar';
 import Calendar from './components/Calendar';
 
 type WrappedProps = AllTodosQueryProps
-  & SubmitTodoMutationProps
+  & CreateTodoMutationProps
   & UpdateMarkedAsDoneMutationProps;
 
 const Container = glamorous.div({
@@ -22,9 +21,11 @@ const Container = glamorous.div({
 
 class Home extends React.Component<WrappedProps, {}> {
   render() {
-    const {data: {loading, allTodos = [
-      {id: '', title: 'Milk', startTime: null, markedAsDone: false, duration: 15}
-    ]}} = this.props;
+    const {
+      data: {loading, allTodos = []},
+      createTodo,
+      updateMarkedAsDone,
+    } = this.props;
 
     const unscheduledTodos = allTodos.filter(({startTime}) => startTime == null);
 
@@ -34,22 +35,16 @@ class Home extends React.Component<WrappedProps, {}> {
         <Sidebar
           loading={loading}
           todos={unscheduledTodos}
-          updateTodo={this.updateTodo}
+          updateTodo={updateMarkedAsDone}
+          onNewTodoSubmit={createTodo}
         />
       </Container>
     );
-  }
-
-  @bind
-  private updateTodo(id: string, markedAsDone: boolean) {
-    const {updateMarkedAsDone} = this.props;
-
-    updateMarkedAsDone(id, markedAsDone);
   }
 }
 
 export default compose(
   allTodosQueryDecorator,
   updateMarkedAsDoneDecorator,
-  submitTodoDecorator,
+  createTodoDecorator,
 )(Home);
