@@ -25,7 +25,7 @@ const StickyContainer = glamorous.div({
   top: 0,
 });
 
-export default class Sidebar extends React.Component<Props & {update?: any}, {}> {
+export default class Sidebar extends React.Component<Props, {}> {
   render() {
     const {loading, todos, updateTodo} = this.props;
 
