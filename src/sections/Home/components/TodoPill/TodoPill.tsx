@@ -14,7 +14,7 @@ interface State {
   complete: boolean;
 }
 
-const Container = glamorous.div<{isDragging: boolean}>({
+const Container = glamorous.div<{isDragging: boolean, optimistic: boolean}>({
   borderRadius: 20,
   backgroundColor: 'salmon',
   color: 'white',
@@ -22,9 +22,9 @@ const Container = glamorous.div<{isDragging: boolean}>({
   margin: '8px 0',
   padding: '5px 10px',
   transition: 'transform 0.25s, opacity 0.25s',
-}, ({isDragging}) => ({
+}, ({isDragging, optimistic}) => ({
   cursor: isDragging ? '-webkit-grabbing' : '-webkit-grab',
-  opacity: isDragging ? 0 : 1,
+  opacity: isDragging ? 0 : optimistic ? 0.5 : 1,
   transform: isDragging ? 'scale(0.95)' : 'scale(1)',
 }));
 
@@ -71,7 +71,7 @@ export default class TodoPill extends React.Component<Props, State> {
   }
 
   render() {
-    const {title, complete} = this.props;
+    const {id, title, complete} = this.props;
     const {isDragging} = this.state;
 
     return (
@@ -79,8 +79,8 @@ export default class TodoPill extends React.Component<Props, State> {
         draggable={true}
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
-        onDragExit={console.log}
         isDragging={isDragging}
+        optimistic={id === ''}
       >
         <Button onClick={this.handleDoneClick} complete={complete} />
         <Title>{title}</Title>
