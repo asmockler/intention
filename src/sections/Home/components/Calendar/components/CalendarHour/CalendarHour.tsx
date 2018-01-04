@@ -1,9 +1,14 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 import bind from '../../../../../../utilities/bind';
+import { Todo } from '../../../../../../types';
 
 interface Props {
   hour: number;
+  date: Date;
+  events: Todo[];
+  onHourEnter(date: Date): void;
+  onHourLeave(date: Date): void;
 }
 
 interface State {
@@ -39,16 +44,29 @@ export default class CalendarHour extends React.Component<Props, State> {
 
   @bind
   handleDragEnter() {
+    const {onHourEnter, hour, date} = this.props;
+    // add the hour to the date
+    date.setHours(hour);
+    onHourEnter(date);
     this.setState({isActiveDropzone: true});
   }
 
   @bind
   handleDragLeave() {
+    const {onHourLeave, hour, date} = this.props;
+    // add the hour to the date
+    date.setHours(hour);
+    onHourLeave(date);
     this.setState({isActiveDropzone: false});
   }
 
+  @bind
+  handleDragOver(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+  }
+
   render() {
-    const {hour} = this.props;
+    const {hour/*, events*/} = this.props;
     const {isActiveDropzone} = this.state;
 
     const formattedHour = hour < 10 ? `0${hour}` : hour;
@@ -57,6 +75,7 @@ export default class CalendarHour extends React.Component<Props, State> {
       <Container
         onDragEnter={this.handleDragEnter}
         onDragLeave={this.handleDragLeave}
+        onDragOver={this.handleDragOver}
         highlighted={isActiveDropzone}
       >
         <Hour>{formattedHour}</Hour>

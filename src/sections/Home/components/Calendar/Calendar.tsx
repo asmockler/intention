@@ -1,6 +1,7 @@
 import * as React from 'react';
 import glamorous from 'glamorous';
 import bind from '../../../../utilities/bind';
+import { Todo } from '../../../../types';
 
 import CalendarDay from './components/CalendarDay';
 
@@ -9,6 +10,9 @@ const DAY_IN_MS = 86400000;
 
 interface Props {
   loading: boolean;
+  events: Todo[];
+  onHourEnter(date: Date): void;
+  onHourLeave(date: Date): void;
 }
 
 interface State {
@@ -67,15 +71,33 @@ export default class Calendar extends React.Component<Props, State> {
 
   render() {
     const {startDate} = this.state;
+    const {events} = this.props;
 
     const calendarDays = Array(NUM_DAYS_VISIBLE).fill(null).map((_, index) => {
-      const date = new Date(startDate.valueOf() + (DAY_IN_MS * index));
+      const startOfDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      const date = new Date(startOfDate.valueOf() + DAY_IN_MS * index);
 
       const showMonth = (index === 0) || date.getDate() === 1;
 
+      const eventsForDay = events.filter(({startTime}) => {
+        if (startTime == null) { return false; }
+
+        const eventStartTime = new Date(startTime);
+
+        return eventStartTime.getFullYear() === date.getFullYear() &&
+          eventStartTime.getMonth() === date.getMonth() &&
+          eventStartTime.getDate() === date.getDate();
+      });
+
       return (
         <DayContainer key={date.toString()}>
-          <CalendarDay date={date} showMonth={showMonth} />
+          <CalendarDay
+            date={date}
+            events={eventsForDay}
+            showMonth={showMonth}
+            onHourEnter={this.props.onHourEnter}
+            onHourLeave={this.props.onHourLeave}
+          />
         </DayContainer>
       );
     });

@@ -6,7 +6,11 @@ interface Props {
   id: string;
   title: string;
   complete: boolean;
+  offset: number;
   onTodoButtonClick(id: string, complete: boolean): void;
+  onDragStart(id: string): void;
+  onDragEnd(id: string): void;
+  onDragEnter(id: string): void;
 }
 
 interface State {
@@ -14,7 +18,13 @@ interface State {
   complete: boolean;
 }
 
-const Container = glamorous.div<{isDragging: boolean, optimistic: boolean}>({
+interface ContainerProps {
+  isDragging: boolean;
+  optimistic: boolean;
+  offset: number;
+}
+
+const Container = glamorous.div<ContainerProps>({
   borderRadius: 20,
   backgroundColor: 'salmon',
   color: 'white',
@@ -22,10 +32,11 @@ const Container = glamorous.div<{isDragging: boolean, optimistic: boolean}>({
   margin: '8px 0',
   padding: '5px 10px',
   transition: 'transform 0.25s, opacity 0.25s',
-}, ({isDragging, optimistic}) => ({
+}, ({isDragging, optimistic, offset}) => ({
   cursor: isDragging ? '-webkit-grabbing' : '-webkit-grab',
   opacity: isDragging ? 0 : optimistic ? 0.5 : 1,
-  transform: isDragging ? 'scale(0.95)' : 'scale(1)',
+  transform: isDragging ? 'scale(0.95)' : `scale(1) translate3d(0, ${offset}px, 0)`,
+  zIndex: offset === 0 ? 0 : -1,
 }));
 
 const Button = glamorous.button({
@@ -52,6 +63,7 @@ export default class TodoPill extends React.Component<Props, State> {
 
   @bind
   handleDragStart() {
+    this.props.onDragStart(this.props.id);
     this.setState({
       isDragging: true,
     });
@@ -59,9 +71,15 @@ export default class TodoPill extends React.Component<Props, State> {
 
   @bind
   handleDragEnd() {
+    this.props.onDragEnd(this.props.id);
     this.setState({
       isDragging: false,
     });
+  }
+
+  @bind
+  handleDragEnter() {
+    this.props.onDragEnter(this.props.id);
   }
 
   @bind
@@ -71,16 +89,18 @@ export default class TodoPill extends React.Component<Props, State> {
   }
 
   render() {
-    const {id, title, complete} = this.props;
+    const {id, title, complete, offset} = this.props;
     const {isDragging} = this.state;
 
     return (
       <Container
         draggable={true}
+        onDragEnter={this.handleDragEnter}
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
         isDragging={isDragging}
         optimistic={id === ''}
+        offset={offset}
       >
         <Button onClick={this.handleDoneClick} complete={complete} />
         <Title>{title}</Title>

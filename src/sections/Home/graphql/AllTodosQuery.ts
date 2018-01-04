@@ -14,6 +14,7 @@ export const allTodosQuery = gql`
       id
       title
       markedAsDone
+      startTime
     }
   }
 `;

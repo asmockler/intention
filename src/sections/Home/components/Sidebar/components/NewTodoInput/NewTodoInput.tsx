@@ -14,6 +14,7 @@ interface ButtonProps {
 const Container = glamorous.div({position: 'relative'});
 
 const Input = glamorous.input({
+  background: 'transparent',
   border: 0,
   borderBottom: '2px solid #888',
   fontSize: 14,
