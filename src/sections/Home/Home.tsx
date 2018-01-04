@@ -51,8 +51,6 @@ class Home extends React.Component<WrappedProps, State> {
       <Container>
         <Calendar
           loading={loading}
-          onHourEnter={this.handleHourEnter}
-          onHourLeave={this.handleHourLeave}
           events={scheduledTodos}
           onDrop={this.handleDrop}
         />
@@ -87,28 +85,6 @@ class Home extends React.Component<WrappedProps, State> {
   private handleDragStart(id: string) {
     this.setState({
       idBeingDragged: id,
-    });
-  }
-
-  @bind
-  private handleHourEnter(date: Date) {
-    this.setState({activeHourDropzone: date});
-  }
-
-  @bind
-  private handleHourLeave(date: Date) {
-    this.setState((state: State) => {
-      const {activeHourDropzone} = state;
-
-      if (activeHourDropzone == null) {
-        return state;
-      }
-
-      return {
-        activeHourDropzone: activeHourDropzone.valueOf() === date.valueOf()
-          ? null
-          : activeHourDropzone,
-      };
     });
   }
 

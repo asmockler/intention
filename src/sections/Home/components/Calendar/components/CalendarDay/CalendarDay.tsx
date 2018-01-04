@@ -17,8 +17,6 @@ interface Props {
   date: Date;
   events: Todo[];
   showMonth: boolean;
-  onHourEnter(date: Date): void;
-  onHourLeave(date: Date): void;
   onDrop(date: Date): void;
 }
 

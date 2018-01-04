@@ -11,8 +11,6 @@ const DAY_IN_MS = 86400000;
 interface Props {
   loading: boolean;
   events: Todo[];
-  onHourEnter(date: Date): void;
-  onHourLeave(date: Date): void;
   onDrop(date: Date): void;
 }
 
@@ -96,8 +94,6 @@ export default class Calendar extends React.Component<Props, State> {
             date={date}
             events={eventsForDay}
             showMonth={showMonth}
-            onHourEnter={this.props.onHourEnter}
-            onHourLeave={this.props.onHourLeave}
             onDrop={this.props.onDrop}
           />
         </DayContainer>
