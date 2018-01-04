@@ -13,6 +13,7 @@ interface Props {
   events: Todo[];
   onHourEnter(date: Date): void;
   onHourLeave(date: Date): void;
+  onDrop(date: Date): void;
 }
 
 interface State {
@@ -97,6 +98,7 @@ export default class Calendar extends React.Component<Props, State> {
             showMonth={showMonth}
             onHourEnter={this.props.onHourEnter}
             onHourLeave={this.props.onHourLeave}
+            onDrop={this.props.onDrop}
           />
         </DayContainer>
       );

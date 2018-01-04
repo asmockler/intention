@@ -54,6 +54,7 @@ class Home extends React.Component<WrappedProps, State> {
           onHourEnter={this.handleHourEnter}
           onHourLeave={this.handleHourLeave}
           events={scheduledTodos}
+          onDrop={this.handleDrop}
         />
         <Sidebar
           loading={loading}
@@ -109,6 +110,11 @@ class Home extends React.Component<WrappedProps, State> {
           : activeHourDropzone,
       };
     });
+  }
+
+  @bind
+  private handleDrop(date: Date) {
+    console.log('dropped', date);
   }
 }
 

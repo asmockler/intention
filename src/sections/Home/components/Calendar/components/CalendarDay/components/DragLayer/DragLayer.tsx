@@ -4,7 +4,7 @@ import Dropzone from './components/Dropzone';
 
 interface Props {
   date: Date;
-  onDrop(): void;
+  onDrop(date: Date): void;
 }
 
 const Container = glamorous.div({
