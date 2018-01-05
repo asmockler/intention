@@ -35,11 +35,7 @@ class Home extends React.Component<WrappedProps, State> {
 
   render() {
     const {
-      data: {loading, allTodos = [
-        {id: '12345', title: 'Milk', markedAsDone: false, duration: 30, startTime: '2018-01-04 04:00:00'},
-        {id: '12f45', title: 'Eggs', markedAsDone: false, duration: 30, startTime: '2018-01-04 04:30:00'},
-        {id: '54321', title: 'Bread', markedAsDone: false, duration: 15, startTime: null},
-      ]},
+      data: {loading, allTodos = []},
       createTodo,
       updateMarkedAsDone,
     } = this.props;
@@ -90,7 +86,13 @@ class Home extends React.Component<WrappedProps, State> {
 
   @bind
   private handleDrop(date: Date) {
-    console.log('dropped', date);
+    const {idBeingDragged} = this.state;
+
+    if (idBeingDragged == null) {
+      return;
+    }
+
+    this.props.updateTodoTime(idBeingDragged, date);
   }
 }
 
