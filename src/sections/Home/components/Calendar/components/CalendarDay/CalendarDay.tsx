@@ -17,6 +17,7 @@ interface Props {
   date: Date;
   events: Todo[];
   showMonth: boolean;
+  droppable: boolean;
   onDrop(date: Date): void;
 }
 
@@ -38,7 +39,7 @@ const HoursContainer = glamorous.div({
   position: 'relative',
 });
 
-export default function CalendarDay({date, showMonth, events, onDrop}: Props) {
+export default function CalendarDay({date, showMonth, events, onDrop, droppable}: Props) {
   const title = showMonth ? getMonth(date) : <span>&nbsp;</span>;
 
   return (
@@ -52,7 +53,11 @@ export default function CalendarDay({date, showMonth, events, onDrop}: Props) {
         <HoursContainer>
           <DisplayLayer />
           <EventLayer events={events} />
-          <DragLayer date={date} onDrop={onDrop} />
+          {
+            droppable
+              ? <DragLayer date={date} onDrop={onDrop} />
+              : null
+          }
         </HoursContainer>
       </div>
     </Container>

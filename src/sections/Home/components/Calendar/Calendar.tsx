@@ -11,6 +11,7 @@ const DAY_IN_MS = 86400000;
 interface Props {
   loading: boolean;
   events: Todo[];
+  droppable: boolean;
   onDrop(date: Date): void;
 }
 
@@ -95,6 +96,7 @@ export default class Calendar extends React.Component<Props, State> {
             events={eventsForDay}
             showMonth={showMonth}
             onDrop={this.props.onDrop}
+            droppable={this.props.droppable}
           />
         </DayContainer>
       );
