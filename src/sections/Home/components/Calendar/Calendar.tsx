@@ -16,6 +16,7 @@ interface Props {
   onDrop(date: Date): void;
   onDragStart(id: string): void;
   onDragEnd(id: string): void;
+  onTodoCheckboxClick(id: string, markedAsDone: boolean): void;
 }
 
 interface State {
@@ -80,7 +81,7 @@ export default class Calendar extends React.Component<Props, State> {
 
   render() {
     const {startDate} = this.state;
-    const {events, onDragStart, onDragEnd, onDrop} = this.props;
+    const {events, onDragStart, onDragEnd, onDrop, onTodoCheckboxClick} = this.props;
 
     const calendarDays = Array(NUM_DAYS_VISIBLE).fill(null).map((_, index) => {
       const startOfDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
@@ -107,6 +108,7 @@ export default class Calendar extends React.Component<Props, State> {
             onDrop={onDrop}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
+            onTodoCheckboxClick={onTodoCheckboxClick}
           />
         </DayContainer>
       );

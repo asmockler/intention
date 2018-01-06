@@ -20,6 +20,7 @@ interface Props {
   onDrop(date: Date): void;
   onDragStart(id: string): void;
   onDragEnd(id: string): void;
+  onTodoCheckboxClick(id: string, markedAsDone: boolean): void;
 }
 
 const Container = glamorous.div({
@@ -47,6 +48,7 @@ export default function CalendarDay({
   onDrop,
   onDragStart,
   onDragEnd,
+  onTodoCheckboxClick,
 }: Props) {
   const title = showMonth ? getMonth(date) : <span>&nbsp;</span>;
 
@@ -65,6 +67,7 @@ export default function CalendarDay({
             events={events}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
+            onTodoCheckboxClick={onTodoCheckboxClick}
           />
         </HoursContainer>
       </div>

@@ -59,6 +59,7 @@ class Home extends React.Component<WrappedProps, State> {
           onDrop={this.handleDrop}
           onDragStart={this.handleDragStart}
           onDragEnd={this.handleDragEnd}
+          onTodoCheckboxClick={updateMarkedAsDone}
         />
         <Sidebar
           loading={loading}

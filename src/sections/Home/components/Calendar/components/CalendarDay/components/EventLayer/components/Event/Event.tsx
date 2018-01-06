@@ -9,6 +9,7 @@ interface Props {
   event: Todo;
   onDragStart(id: string): void;
   onDragEnd(id: string): void;
+  onTodoCheckboxClick(id: string, markedAsDone: boolean): void;
 }
 
 interface State {
@@ -84,6 +85,15 @@ export default class Event extends React.Component<Props, State> {
         <Title>{event.title}</Title>
       </Container>
     );
+  }
+
+  @bind
+  private handleTodoCheckboxClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    const {event, onTodoCheckboxClick} = this.props;
+
+    onTodoCheckboxClick(event.id, !event.markedAsDone);
   }
 
   @bind

@@ -8,6 +8,7 @@ interface Props {
   events: Todo[];
   onDragStart(id: string): void;
   onDragEnd(id: string): void;
+  onTodoCheckboxClick(id: string, markedAsDone: boolean): void;
 }
 
 const Container = glamorous.div({
@@ -19,13 +20,14 @@ const Container = glamorous.div({
   zIndex: 3,
 });
 
-export default function EventLayer({events, onDragEnd, onDragStart}: Props) {
+export default function EventLayer({events, onDragEnd, onDragStart, onTodoCheckboxClick}: Props) {
   const eventsMarkup = events.map((event) => (
     <Event
       key={event.id}
       event={event}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onTodoCheckboxClick={onTodoCheckboxClick}
     />
   ));
 
