@@ -3,6 +3,8 @@ import glamorous from 'glamorous';
 import bind from '../../../../../../../../../../utilities/bind';
 import { Todo } from '../../../../../../../../../../types';
 
+import { GRADIENTS } from '../../../../../../../../../../styles';
+
 interface Props {
   event: Todo;
   onDragStart(id: string): void;
@@ -16,10 +18,12 @@ interface State {
 const EVENT_PADDING = 2;
 
 const Container = glamorous.div<{hour: number, duration: number, isDragging: boolean}>({
-  background: 'salmon',
+  backgroundImage: GRADIENTS.blue,
+  borderRadius: 4,
   color: 'white',
+  display: 'flex',
   left: 22,
-  padding: 3,
+  padding: 8,
   pointerEvents: 'visible',
   position: 'absolute',
   width: 'calc(100% - 24px)',
@@ -29,6 +33,17 @@ const Container = glamorous.div<{hour: number, duration: number, isDragging: boo
   transform: isDragging ? 'scale(0.95)' : 'scale(1)',
   transition: isDragging ? 'opacity 0.15s, transform 0.15s' : 'opacity 0.15s',
   top: hour * 60 + EVENT_PADDING,
+}));
+
+const Button = glamorous.button({
+  border: '2px solid white',
+  borderRadius: '100%',
+  height: 16,
+  marginRight: 8,
+  padding: 0,
+  width: 16,
+}, ({complete}: {complete: boolean}) => ({
+  background: complete ? 'white' : 'transparent',
 }));
 
 const Title = glamorous.p({
@@ -62,6 +77,10 @@ export default class Event extends React.Component<Props, State> {
         duration={event.duration}
         hour={startTime.getHours() + (startTime.getMinutes() / 60)}
       >
+        <Button
+          complete={event.markedAsDone}
+          onClick={this.handleTodoCheckboxClick}
+        />
         <Title>{event.title}</Title>
       </Container>
     );
