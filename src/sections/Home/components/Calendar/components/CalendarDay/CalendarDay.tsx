@@ -7,6 +7,8 @@ import Heading from '../../../../../../components/Heading';
 
 import { getMonth } from '../../../../../../utilities/dates';
 
+import { CALENDAR_CONTROL_HEIGHT } from '../../styles';
+
 import DisplayLayer from './components/DisplayLayer';
 import EventLayer from './components/EventLayer';
 import DragLayer from './components/DragLayer';
@@ -30,7 +32,7 @@ const HeadingContainer = glamorous.div({
   background: '#fff',
   padding: '15px 0',
   position: 'sticky',
-  top: 0,
+  top: CALENDAR_CONTROL_HEIGHT,
   zIndex: 10,
 });
 

@@ -3,6 +3,8 @@ import glamorous from 'glamorous';
 import bind from '../../../../utilities/bind';
 import { Todo } from '../../../../types';
 
+import { CALENDAR_CONTROL_HEIGHT } from './styles';
+
 import CalendarDay from './components/CalendarDay';
 
 const NUM_DAYS_VISIBLE = 3;
@@ -25,8 +27,14 @@ const Container = glamorous.div({
 });
 
 const ControlsContainer = glamorous.div({
+  alignItems: 'center',
+  background: '#fff',
   display: 'flex',
+  height: CALENDAR_CONTROL_HEIGHT,
   justifyContent: 'space-between',
+  position: 'sticky',
+  top: 0,
+  zIndex: 10,
 });
 
 const CalendarContainer = glamorous.div({
