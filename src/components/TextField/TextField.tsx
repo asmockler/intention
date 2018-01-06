@@ -5,6 +5,7 @@ import bind from '../../utilities/bind';
 interface Props {
   label: string;
   value: string;
+  type?: 'text' | 'password';
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
@@ -17,6 +18,10 @@ interface LabelProps {
 }
 
 const UNFOCUSED_COLOR = '#888';
+
+const Container = glamorous.div({
+  width: '100%',
+});
 
 const Input = glamorous.input({
   border: 0,
@@ -31,17 +36,22 @@ const Input = glamorous.input({
   },
 });
 
-const Label = glamorous.label({
-  display: 'inline-block',
-  fontWeight: 700,
-  pointerEvents: 'none',
-  transformOrigin: 'left',
-  transition: 'transform 0.15s, color 0.25s',
-  willChange: 'transform, color',
-}, ({aboveInput}: LabelProps) => ({
-  color: aboveInput ? '#000' : `${UNFOCUSED_COLOR}`,
-  transform: aboveInput ? 'translate3d(0, 5px, 0) scale(0.8)' : 'translate3d(0, 28px, 0) scale(1)',
-}));
+const Label = glamorous.label(
+  {
+    display: 'inline-block',
+    fontWeight: 700,
+    pointerEvents: 'none',
+    transformOrigin: 'left',
+    transition: 'transform 0.15s, color 0.25s',
+    willChange: 'transform, color',
+  },
+  ({aboveInput}: LabelProps) => ({
+    color: aboveInput ? '#000' : `${UNFOCUSED_COLOR}`,
+    transform: aboveInput
+      ? 'translate3d(0, 5px, 0) scale(0.8)'
+      : 'translate3d(0, 28px, 0) scale(1)',
+  })
+);
 
 export default class TextField extends React.Component<Props, State> {
   state = {
@@ -49,21 +59,20 @@ export default class TextField extends React.Component<Props, State> {
   };
 
   render() {
-    const {label, onChange, value} = this.props;
+    const {label, onChange, value, type} = this.props;
     const {labelFloating} = this.state;
 
     return (
-      <div>
-        <Label aboveInput={labelFloating}>
-          {label}
-        </Label>
+      <Container>
+        <Label aboveInput={labelFloating}>{label}</Label>
         <Input
           onFocus={this.handleLabelFloating}
           onBlur={this.handleLabelFloating}
           value={value}
           onChange={onChange}
+          type={type == null ? 'text' : type}
         />
-      </div>
+      </Container>
     );
   }
 

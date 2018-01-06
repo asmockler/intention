@@ -1,3 +1,14 @@
+type User @model {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  email: String! @isUnique
+  password: String!
+
+  todos: [Todo!]! @relation(name: "UsersTodos")
+}
+
 type Todo @model {
   id: ID! @isUnique
   createdAt: DateTime!
@@ -5,10 +16,10 @@ type Todo @model {
 
   title: String!
   markedAsDone: Boolean! @defaultValue(value: "false")
-  duration: Int! # Minutes
-    @defaultValue(value: 30)
-    @migrationValue(value: 30)
+  duration: Int! @defaultValue(value: 30) # 30 minutes
   startTime: DateTime
+
+  user: User! @relation(name: "UsersTodos")
 }
 
 type Event @model {
@@ -17,8 +28,7 @@ type Event @model {
   updatedAt: DateTime!
 
   title: String!
-  duration: Int! # Minutes
-    @defaultValue(value: 30)
+  duration: Int! @defaultValue(value: 30) # Minutes
   startTime: DateTime
   location: String
 }

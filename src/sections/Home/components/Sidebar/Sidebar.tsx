@@ -1,13 +1,15 @@
 import React from 'react';
 import glamorous from 'glamorous';
+import {withRouter, RouteComponentProps} from 'react-router';
 import bind from '../../../../utilities/bind';
 
+import Button from '../../../../components/Button';
 import Heading from '../../../../components/Heading';
 import TodoPill from '../TodoPill';
 import SidebarLoading from './components/SidebarLoading';
 import NewTodoInput from './components/NewTodoInput';
 
-import { Todo } from '../../../../types';
+import {Todo} from '../../../../types';
 
 export interface Props {
   todos: Todo[];
@@ -17,6 +19,8 @@ export interface Props {
   onDragStart(id: string): void;
   onDragEnd(): void;
 }
+
+type ComposedProps = Props & RouteComponentProps<any>;
 
 export interface State {
   newTodoTitle: string;
@@ -36,8 +40,8 @@ const StickyContainer = glamorous.div({
   top: 0,
 });
 
-export default class Sidebar extends React.Component<Props, State> {
-  constructor(props: Props) {
+class Sidebar extends React.Component<ComposedProps, State> {
+  constructor(props: ComposedProps) {
     super(props);
 
     this.state = {
@@ -48,41 +52,38 @@ export default class Sidebar extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      loading,
-      todos,
-      updateTodo
-    } = this.props;
+    const {loading, todos, updateTodo} = this.props;
     const {newTodoTitle, dragOverIndex, indexBeingDragged} = this.state;
 
-    const todoMarkup = loading
-      ? <SidebarLoading />
-      : todos.map(({title, id, markedAsDone}, index) => {
-          let offset = 0;
+    const todoMarkup = loading ? (
+      <SidebarLoading />
+    ) : (
+      todos.map(({title, id, markedAsDone}, index) => {
+        let offset = 0;
 
-          if (dragOverIndex == null || indexBeingDragged == null) {
-            offset = 0;
-          } else if (index > indexBeingDragged && index <= dragOverIndex) {
-            offset = -42;
-          } else if (index < indexBeingDragged && index >= dragOverIndex) {
-            offset = 42;
-          }
-
-          return (
-            <TodoPill
-              title={title}
-              onTodoButtonClick={updateTodo}
-              complete={markedAsDone}
-              key={id}
-              id={id}
-              onDragStart={this.handleDragStart}
-              onDragEnd={this.handleDragEnd}
-              onDragEnter={this.swapTodos}
-              offset={offset}
-            />
-          );
+        if (dragOverIndex == null || indexBeingDragged == null) {
+          offset = 0;
+        } else if (index > indexBeingDragged && index <= dragOverIndex) {
+          offset = -42;
+        } else if (index < indexBeingDragged && index >= dragOverIndex) {
+          offset = 42;
         }
-      );
+
+        return (
+          <TodoPill
+            title={title}
+            onTodoButtonClick={updateTodo}
+            complete={markedAsDone}
+            key={id}
+            id={id}
+            onDragStart={this.handleDragStart}
+            onDragEnd={this.handleDragEnd}
+            onDragEnter={this.swapTodos}
+            offset={offset}
+          />
+        );
+      })
+    );
 
     return (
       <Container>
@@ -97,15 +98,26 @@ export default class Sidebar extends React.Component<Props, State> {
           </div>
           {todoMarkup}
         </StickyContainer>
+        <div style={{position: 'fixed', bottom: 10, right: 10}}>
+          <Button onClick={this.logout}>Log out</Button>
+        </div>
       </Container>
     );
+  }
+
+  @bind
+  private logout() {
+    localStorage.removeItem('token');
+    this.props.history.push('/login');
   }
 
   @bind
   private handleDragStart(idBeingDragged: string) {
     this.props.onDragStart(idBeingDragged);
     this.setState({
-      indexBeingDragged: this.props.todos.findIndex(({id}) => id === idBeingDragged),
+      indexBeingDragged: this.props.todos.findIndex(
+        ({id}) => id === idBeingDragged
+      ),
     });
   }
 
@@ -135,7 +147,11 @@ export default class Sidebar extends React.Component<Props, State> {
   }
 
   @bind
-  private handleNewTodoSubmit(event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
+  private handleNewTodoSubmit(
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement>
+  ) {
     event.preventDefault();
 
     const {newTodoTitle} = this.state;
@@ -151,3 +167,5 @@ export default class Sidebar extends React.Component<Props, State> {
     this.setState({newTodoTitle: event.currentTarget.value});
   }
 }
+
+export default withRouter<ComposedProps>(Sidebar);

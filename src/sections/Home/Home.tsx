@@ -1,20 +1,32 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import { compose } from 'react-apollo';
+import {compose} from 'react-apollo';
 import bind from '../../utilities/bind';
 
-import allTodosQueryDecorator, { AllTodosQueryProps } from './graphql/AllTodosQuery';
-import updateMarkedAsDoneDecorator, { UpdateMarkedAsDoneMutationProps } from './graphql/UpdateMarkedAsDoneMutation';
-import createTodoDecorator, { CreateTodoMutationProps } from './graphql/SubmitTodoMutation';
-import updateTodoTimeDecorator, { UpdateTodoTimeMutationProps } from './graphql/UpdateTodoTimeMutation';
+import loggedInUserQueryDecorator, {
+  LoggedInUserQueryResponse,
+} from '../../graphql/LoggedInUserQuery';
+import allTodosQueryDecorator, {
+  AllTodosQueryResult,
+} from './graphql/AllTodosQuery';
+import updateMarkedAsDoneDecorator, {
+  UpdateMarkedAsDoneMutationProps,
+} from './graphql/UpdateMarkedAsDoneMutation';
+import createTodoDecorator, {
+  CreateTodoMutationProps,
+} from './graphql/SubmitTodoMutation';
+import updateTodoTimeDecorator, {
+  UpdateTodoTimeMutationProps,
+} from './graphql/UpdateTodoTimeMutation';
 
 import Sidebar from './components/Sidebar';
 import Calendar from './components/Calendar';
 
-type WrappedProps = AllTodosQueryProps
-  & CreateTodoMutationProps
-  & UpdateMarkedAsDoneMutationProps
-  & UpdateTodoTimeMutationProps;
+type WrappedProps = AllTodosQueryResult &
+  CreateTodoMutationProps &
+  UpdateMarkedAsDoneMutationProps &
+  UpdateTodoTimeMutationProps &
+  LoggedInUserQueryResponse;
 
 interface State {
   activeHourDropzone: Date | null;
@@ -42,11 +54,11 @@ class Home extends React.Component<WrappedProps, State> {
   }
 
   render() {
-    const {
-      data: {loading, allTodos = []},
-      createTodo,
-      updateMarkedAsDone,
-    } = this.props;
+    const {loggedInUserQuery, allTodosQuery, updateMarkedAsDone} = this.props;
+
+    const loading = loggedInUserQuery.loading || allTodosQuery.loading;
+
+    const {allTodos = []} = allTodosQuery;
 
     const unscheduledTodos = allTodos.filter((todo) => todo.startTime == null);
     const scheduledTodos = allTodos.filter((todo) => todo.startTime != null);
@@ -65,12 +77,23 @@ class Home extends React.Component<WrappedProps, State> {
           loading={loading}
           todos={unscheduledTodos}
           updateTodo={updateMarkedAsDone}
-          onNewTodoSubmit={createTodo}
+          onNewTodoSubmit={this.handleNewTodoSubmit}
           onDragStart={this.handleDragStart}
           onDragEnd={this.handleDragEnd}
         />
       </Container>
     );
+  }
+
+  @bind
+  private handleNewTodoSubmit(title: string) {
+    const {loggedInUserQuery: {loggedInUser}, createTodo} = this.props;
+
+    if (loggedInUser == null || loggedInUser.id == null) {
+      throw new Error('User not logged in');
+    }
+
+    createTodo(loggedInUser.id, title);
   }
 
   @bind
@@ -111,7 +134,8 @@ class Home extends React.Component<WrappedProps, State> {
 
 export default compose(
   allTodosQueryDecorator,
+  loggedInUserQueryDecorator,
   updateMarkedAsDoneDecorator,
   createTodoDecorator,
-  updateTodoTimeDecorator,
+  updateTodoTimeDecorator
 )(Home);

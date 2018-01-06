@@ -1,8 +1,8 @@
-import { QueryProps } from 'react-apollo';
+import {QueryProps} from 'react-apollo';
 
-export interface ApolloResponse<T> {
-  data: QueryProps & T;
-}
+export type ApolloResponse<Data, QueryName extends string = 'data'> = {
+  [name in QueryName]: QueryProps & Data
+};
 
 export interface Todo {
   id: string;

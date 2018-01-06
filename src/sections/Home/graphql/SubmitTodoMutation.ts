@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 
-import { allTodosQuery, ResponseData } from './AllTodosQuery';
+import {allTodosQuery, ResponseData} from './AllTodosQuery';
 
 export interface CreateTodoMutationProps {
-  createTodo(title: string, duration?: number): void;
+  createTodo(userId: string, title: string, duration?: number): void;
 }
 
 export const createTodoMutation = gql`
-  mutation CreateTodoMutation($title: String!, $duration: Int) {
-    createTodo(title: $title, duration: $duration) {
+  mutation CreateTodoMutation($userId: ID!, $title: String!, $duration: Int) {
+    createTodo(title: $title, duration: $duration, userId: $userId) {
       id
       title
       duration
@@ -20,11 +20,13 @@ export const createTodoMutation = gql`
 
 export default graphql(createTodoMutation, {
   props: ({mutate}): CreateTodoMutationProps => ({
-    createTodo(title: string, duration?: number) {
-      if (mutate == null) { return; }
+    createTodo(userId: string, title: string, duration?: number) {
+      if (mutate == null) {
+        return;
+      }
 
       return mutate({
-        variables: {title, duration},
+        variables: {userId, title, duration},
         optimisticResponse: {
           __typename: 'Mutation',
           createTodo: {
@@ -37,9 +39,13 @@ export default graphql(createTodoMutation, {
         },
         update: (proxy, result) => {
           const {data: {createTodo}} = result as any;
-          const dataProxy = proxy.readQuery<ResponseData>({query: allTodosQuery});
+          const dataProxy = proxy.readQuery<ResponseData>({
+            query: allTodosQuery,
+          });
 
-          if (dataProxy == null) { return; }
+          if (dataProxy == null) {
+            return;
+          }
 
           dataProxy.allTodos.unshift(createTodo);
 

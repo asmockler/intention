@@ -13,6 +13,7 @@
     "graphql-tag": "^2.6.0",
     "lodash": "^4.17.4",
     "lodash-decorators": "^4.5.0",
+    "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
@@ -33,5 +34,11 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
