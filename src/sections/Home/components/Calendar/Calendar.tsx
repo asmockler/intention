@@ -11,8 +11,9 @@ const DAY_IN_MS = 86400000;
 interface Props {
   loading: boolean;
   events: Todo[];
-  droppable: boolean;
   onDrop(date: Date): void;
+  onDragStart(id: string): void;
+  onDragEnd(id: string): void;
 }
 
 interface State {
@@ -71,7 +72,7 @@ export default class Calendar extends React.Component<Props, State> {
 
   render() {
     const {startDate} = this.state;
-    const {events} = this.props;
+    const {events, onDragStart, onDragEnd, onDrop} = this.props;
 
     const calendarDays = Array(NUM_DAYS_VISIBLE).fill(null).map((_, index) => {
       const startOfDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
@@ -95,8 +96,9 @@ export default class Calendar extends React.Component<Props, State> {
             date={date}
             events={eventsForDay}
             showMonth={showMonth}
-            onDrop={this.props.onDrop}
-            droppable={this.props.droppable}
+            onDrop={onDrop}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
           />
         </DayContainer>
       );

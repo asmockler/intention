@@ -39,7 +39,6 @@ class Home extends React.Component<WrappedProps, State> {
       createTodo,
       updateMarkedAsDone,
     } = this.props;
-    const {idBeingDragged} = this.state;
 
     const unscheduledTodos = allTodos.filter((todo) => todo.startTime == null);
     const scheduledTodos = allTodos.filter((todo) => todo.startTime != null);
@@ -50,7 +49,8 @@ class Home extends React.Component<WrappedProps, State> {
           loading={loading}
           events={scheduledTodos}
           onDrop={this.handleDrop}
-          droppable={idBeingDragged != null}
+          onDragStart={this.handleDragStart}
+          onDragEnd={this.handleDragEnd}
         />
         <Sidebar
           loading={loading}

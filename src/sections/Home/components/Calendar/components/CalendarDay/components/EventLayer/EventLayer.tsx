@@ -6,19 +6,27 @@ import Event from './components/Event';
 
 interface Props {
   events: Todo[];
+  onDragStart(id: string): void;
+  onDragEnd(id: string): void;
 }
 
 const Container = glamorous.div({
   height: '100%',
+  pointerEvents: 'none',
   position: 'absolute',
   top: 0,
   width: '100%',
-  zIndex: 1,
+  zIndex: 3,
 });
 
-export default function EventLayer({events}: Props) {
+export default function EventLayer({events, onDragEnd, onDragStart}: Props) {
   const eventsMarkup = events.map((event) => (
-    <Event event={event} key={event.id} />
+    <Event
+      key={event.id}
+      event={event}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    />
   ));
 
   return (
