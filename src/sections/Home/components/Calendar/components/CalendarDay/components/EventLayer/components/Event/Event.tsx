@@ -22,6 +22,7 @@ const Container = glamorous.div<{hour: number, duration: number, isDragging: boo
   backgroundImage: GRADIENTS.blue,
   borderRadius: 4,
   color: 'white',
+  cursor: '-webkit-grab',
   display: 'flex',
   left: 22,
   padding: 8,
