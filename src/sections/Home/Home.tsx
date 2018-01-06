@@ -33,6 +33,14 @@ class Home extends React.Component<WrappedProps, State> {
     idBeingDragged: null,
   };
 
+  componentDidMount() {
+    const currentHour = new Date().getHours();
+
+    window.setTimeout(() => {
+      window.scrollTo(0, currentHour * 60);
+    }, 0);
+  }
+
   render() {
     const {
       data: {loading, allTodos = []},
