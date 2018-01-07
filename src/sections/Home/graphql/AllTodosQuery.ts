@@ -3,19 +3,23 @@ import {graphql} from 'react-apollo';
 import {Todo, ApolloResponse} from '../../../types';
 
 export interface ResponseData {
-  allTodos: Todo[];
+  user: {
+    todos: Todo[];
+  };
 }
 
 export type AllTodosQueryResult = ApolloResponse<ResponseData, 'allTodosQuery'>;
 
 export const allTodosQuery = gql`
   query AllTodosQuery {
-    allTodos: allTodoes(orderBy: createdAt_DESC) {
-      id
-      title
-      markedAsDone
-      startTime
-      duration
+    user {
+      todos(orderBy: createdAt_DESC) {
+        id
+        title
+        markedAsDone
+        startTime
+        duration
+      }
     }
   }
 `;

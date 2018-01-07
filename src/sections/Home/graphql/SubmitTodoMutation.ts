@@ -47,7 +47,7 @@ export default graphql(createTodoMutation, {
             return;
           }
 
-          dataProxy.allTodos.unshift(createTodo);
+          dataProxy.user.todos.unshift(createTodo);
 
           proxy.writeQuery({query: allTodosQuery, data: dataProxy});
         },

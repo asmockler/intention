@@ -20,4 +20,18 @@ functions:
       code: src/email-password/loggedInUser.ts
 
 permissions:
-  - operation: "*"
+  - operation: User.create
+
+  - operation: User.read
+    authenticated: true
+    query: src/permissions/User.graphql
+
+  - operation: Todo.read
+    authenticated: true
+    query: src/permissions/Todo.graphql
+
+  - operation: Todo.create
+    authenticated: true
+
+  - operation: UsersTodos.connect
+    authenticated: true

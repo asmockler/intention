@@ -35,7 +35,6 @@ const PrivateRoute = ({
   />
 );
 
-// class App extends React.Component<LoggedInUserQueryResponse, never> {
 class App extends React.Component<LoggedInUserQueryResponse, never> {
   render() {
     const {loggedInUserQuery} = this.props;

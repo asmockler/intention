@@ -58,10 +58,10 @@ class Home extends React.Component<WrappedProps, State> {
 
     const loading = loggedInUserQuery.loading || allTodosQuery.loading;
 
-    const {allTodos = []} = allTodosQuery;
+    const {user: {todos = []} = {}} = allTodosQuery;
 
-    const unscheduledTodos = allTodos.filter((todo) => todo.startTime == null);
-    const scheduledTodos = allTodos.filter((todo) => todo.startTime != null);
+    const unscheduledTodos = todos.filter((todo) => todo.startTime == null);
+    const scheduledTodos = todos.filter((todo) => todo.startTime != null);
 
     return (
       <Container>
