@@ -33,11 +33,12 @@ module.exports = {
         trailingComma: 'es5',
       },
     ],
-    // 'graphql/template-strings': [
-    //   'error',
-    //   {
-    //     env: 'apollo',
-    //   },
-    // ],
+    'graphql/template-strings': [
+      'error',
+      {
+        env: 'apollo',
+        schemaJson: require('./schema.json'),
+      },
+    ],
   },
 };
