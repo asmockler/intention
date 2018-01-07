@@ -1,6 +1,6 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import {Todo} from '../../../../../../../../types';
+import {Todo} from 'types';
 
 import Event from './components/Event';
 

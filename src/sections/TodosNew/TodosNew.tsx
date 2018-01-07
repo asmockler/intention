@@ -1,9 +1,9 @@
 import React from 'react';
-import bind from '../../utilities/bind';
+import bind from 'utilities/bind';
 
-import Heading from '../../components/Heading';
-import FormContainer from '../../components/FormContainer';
-import TextField from '../../components/TextField';
+import Heading from 'components/Heading';
+import FormContainer from 'components/FormContainer';
+import TextField from 'components/TextField';
 
 interface Props {}
 interface State {

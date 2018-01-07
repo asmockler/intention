@@ -1,9 +1,9 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import bind from '../../../../../../../../../../utilities/bind';
-import {Todo} from '../../../../../../../../../../types';
+import bind from 'utilities/bind';
+import {Todo} from 'types';
 
-import {GRADIENTS} from '../../../../../../../../../../styles';
+import {GRADIENTS} from 'styles';
 
 interface Props {
   event: Todo;

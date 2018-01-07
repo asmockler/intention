@@ -1,15 +1,15 @@
 import React from 'react';
 import glamorous from 'glamorous';
 import {withRouter, RouteComponentProps} from 'react-router';
-import bind from '../../../../utilities/bind';
+import bind from 'utilities/bind';
 
-import Button from '../../../../components/Button';
-import Heading from '../../../../components/Heading';
+import Button from 'components/Button';
+import Heading from 'components/Heading';
 import TodoPill from '../TodoPill';
 import SidebarLoading from './components/SidebarLoading';
 import NewTodoInput from './components/NewTodoInput';
 
-import {Todo} from '../../../../types';
+import {Todo} from 'types';
 
 export interface Props {
   todos: Todo[];

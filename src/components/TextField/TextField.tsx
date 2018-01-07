@@ -1,6 +1,6 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import bind from '../../utilities/bind';
+import bind from 'utilities/bind';
 
 interface Props {
   label: string;

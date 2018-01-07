@@ -7,16 +7,16 @@ import {
 } from 'react-router-dom';
 import {RouteProps} from 'react-router';
 import {compose} from 'react-apollo';
-import bind from './utilities/bind';
+import bind from 'utilities/bind';
 
 import loggedInUserQueryDecorator, {
   LoggedInUserQueryResponse,
-} from './graphql/LoggedInUserQuery';
+} from 'graphql/LoggedInUserQuery';
 
-import Home from './sections/Home';
-import Login from './sections/Login';
-import Signup from './sections/Signup';
-import TodosNew from './sections/TodosNew';
+import Home from 'sections/Home';
+import Login from 'sections/Login';
+import Signup from 'sections/Signup';
+import TodosNew from 'sections/TodosNew';
 
 const PrivateRoute = ({
   component: Component,

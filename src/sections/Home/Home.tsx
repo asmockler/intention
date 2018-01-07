@@ -1,11 +1,11 @@
 import React from 'react';
 import glamorous from 'glamorous';
 import {compose} from 'react-apollo';
-import bind from '../../utilities/bind';
+import bind from 'utilities/bind';
 
 import loggedInUserQueryDecorator, {
   LoggedInUserQueryResponse,
-} from '../../graphql/LoggedInUserQuery';
+} from 'graphql/LoggedInUserQuery';
 import allTodosQueryDecorator, {
   AllTodosQueryResult,
 } from './graphql/AllTodosQuery';

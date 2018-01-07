@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
-import {ApolloResponse} from '../types';
+import {ApolloResponse} from 'types';
 
 interface Response {
   loggedInUser: {

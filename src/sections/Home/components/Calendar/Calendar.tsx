@@ -1,11 +1,11 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import bind from '../../../../utilities/bind';
-import {Todo} from '../../../../types';
+import bind from 'utilities/bind';
+import {Todo} from 'types';
 
 import {CALENDAR_CONTROL_HEIGHT} from './styles';
 
-import KeydownListener from '../../../../components/KeydownListener';
+import KeydownListener from 'components/KeydownListener';
 import CalendarDay from './components/CalendarDay';
 
 const NUM_DAYS_VISIBLE = 3;

@@ -1,11 +1,11 @@
 import React from 'react';
 import glamorous from 'glamorous';
 
-import {Todo} from '../../../../../../types';
+import {Todo} from 'types';
 
-import Heading from '../../../../../../components/Heading';
+import Heading from 'components/Heading';
 
-import {getMonth} from '../../../../../../utilities/dates';
+import {getMonth} from 'utilities/dates';
 
 import {CALENDAR_CONTROL_HEIGHT} from '../../styles';
 

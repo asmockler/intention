@@ -1,5 +1,5 @@
 import glamorous from 'glamorous';
-import {COLORS} from '../../styles';
+import {COLORS} from 'styles';
 
 interface Props {
   color?: 'green';

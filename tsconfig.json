@@ -12,7 +12,13 @@
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
+    "rootDir": ".",
+    "baseUrl": "src",
+    "paths": {
+      "*": [
+        "*"
+      ]
+    },
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,

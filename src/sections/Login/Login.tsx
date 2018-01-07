@@ -2,15 +2,15 @@ import React from 'react';
 import glamorous from 'glamorous';
 import {compose} from 'react-apollo';
 import {withRouter, RouteComponentProps} from 'react-router';
-import bind from '../../utilities/bind';
+import bind from 'utilities/bind';
 
 import authenticateUserMutationDecorator, {
   AuthenticateUserMutationProps,
 } from './graphql/AuthenticateUserMutation';
 
-import Button from '../../components/Button';
-import Heading from '../../components/Heading';
-import TextField from '../../components/TextField';
+import Button from 'components/Button';
+import Heading from 'components/Heading';
+import TextField from 'components/TextField';
 
 interface State {
   email: string;
