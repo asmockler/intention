@@ -33,5 +33,9 @@ permissions:
   - operation: Todo.create
     authenticated: true
 
+  - operation: Todo.update
+    authenticated: true
+    query: src/permissions/Todo.graphql
+
   - operation: UsersTodos.connect
     authenticated: true
