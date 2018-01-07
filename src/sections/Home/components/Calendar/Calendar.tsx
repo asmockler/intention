@@ -1,9 +1,9 @@
 import React from 'react';
 import glamorous from 'glamorous';
 import bind from '../../../../utilities/bind';
-import { Todo } from '../../../../types';
+import {Todo} from '../../../../types';
 
-import { CALENDAR_CONTROL_HEIGHT } from './styles';
+import {CALENDAR_CONTROL_HEIGHT} from './styles';
 
 import CalendarDay from './components/CalendarDay';
 
@@ -47,13 +47,16 @@ const DayContainer = glamorous.div({
   flex: '1 0 33.333%',
 });
 
-const Button = glamorous.button<{small?: boolean}>({
-  color: '#007ACE',
-  padding: '12px 0 0',
-}, ({small = false}) => ({
-  fontSize: small ? 14 : 20,
-  fontWeight: small ? 600 : 900,
-}));
+const Button = glamorous.button<{small?: boolean}>(
+  {
+    color: '#007ACE',
+    padding: '12px 0 0',
+  },
+  ({small = false}) => ({
+    fontSize: small ? 14 : 20,
+    fontWeight: small ? 600 : 900,
+  })
+);
 
 export default class Calendar extends React.Component<Props, State> {
   state = {
@@ -81,49 +84,65 @@ export default class Calendar extends React.Component<Props, State> {
 
   render() {
     const {startDate} = this.state;
-    const {events, onDragStart, onDragEnd, onDrop, onTodoCheckboxClick} = this.props;
+    const {
+      events,
+      onDragStart,
+      onDragEnd,
+      onDrop,
+      onTodoCheckboxClick,
+    } = this.props;
 
-    const calendarDays = Array(NUM_DAYS_VISIBLE).fill(null).map((_, index) => {
-      const startOfDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-      const date = new Date(startOfDate.valueOf() + DAY_IN_MS * index);
+    const calendarDays = Array(NUM_DAYS_VISIBLE)
+      .fill(null)
+      .map((_, index) => {
+        const startOfDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate()
+        );
+        const date = new Date(startOfDate.valueOf() + DAY_IN_MS * index);
 
-      const showMonth = (index === 0) || date.getDate() === 1;
+        const showMonth = index === 0 || date.getDate() === 1;
 
-      const eventsForDay = events.filter(({startTime}) => {
-        if (startTime == null) { return false; }
+        const eventsForDay = events.filter(({startTime}) => {
+          if (startTime == null) {
+            return false;
+          }
 
-        const eventStartTime = new Date(startTime);
+          const eventStartTime = new Date(startTime);
 
-        return eventStartTime.getFullYear() === date.getFullYear() &&
-          eventStartTime.getMonth() === date.getMonth() &&
-          eventStartTime.getDate() === date.getDate();
+          return (
+            eventStartTime.getFullYear() === date.getFullYear() &&
+            eventStartTime.getMonth() === date.getMonth() &&
+            eventStartTime.getDate() === date.getDate()
+          );
+        });
+
+        return (
+          <DayContainer key={date.toString()}>
+            <CalendarDay
+              date={date}
+              events={eventsForDay}
+              showMonth={showMonth}
+              onDrop={onDrop}
+              onDragStart={onDragStart}
+              onDragEnd={onDragEnd}
+              onTodoCheckboxClick={onTodoCheckboxClick}
+            />
+          </DayContainer>
+        );
       });
-
-      return (
-        <DayContainer key={date.toString()}>
-          <CalendarDay
-            date={date}
-            events={eventsForDay}
-            showMonth={showMonth}
-            onDrop={onDrop}
-            onDragStart={onDragStart}
-            onDragEnd={onDragEnd}
-            onTodoCheckboxClick={onTodoCheckboxClick}
-          />
-        </DayContainer>
-      );
-    });
 
     return (
       <Container>
         <ControlsContainer>
           <Button onClick={this.handlePreviousClick}>&larr;</Button>
-          <Button onClick={this.handleTodayClick} small>Today</Button>
+          <Button onClick={this.handleTodayClick} small>
+            Today
+          </Button>
           <Button onClick={this.handleNextClick}>&rarr;</Button>
         </ControlsContainer>
-        <CalendarContainer>
-          {calendarDays}
-        </CalendarContainer>
+        <CalendarContainer>{calendarDays}</CalendarContainer>
       </Container>
     );
   }

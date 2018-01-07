@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 
 export interface UpdateMarkedAsDoneMutationProps {
   updateMarkedAsDone(id: string, markedAsDone: boolean): any;
@@ -17,7 +17,9 @@ export const updateMarkedAsDoneMutation = gql`
 export default graphql(updateMarkedAsDoneMutation, {
   props: ({mutate}): UpdateMarkedAsDoneMutationProps => ({
     updateMarkedAsDone(id: string, markedAsDone: boolean) {
-      if (mutate == null) { return; }
+      if (mutate == null) {
+        return;
+      }
 
       return mutate({
         variables: {id, markedAsDone},
@@ -30,6 +32,6 @@ export default graphql(updateMarkedAsDoneMutation, {
           },
         },
       });
-    }
+    },
   }),
 });

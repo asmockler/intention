@@ -1,9 +1,9 @@
 import React from 'react';
 import glamorous from 'glamorous';
 import bind from '../../../../../../../../../../utilities/bind';
-import { Todo } from '../../../../../../../../../../types';
+import {Todo} from '../../../../../../../../../../types';
 
-import { GRADIENTS } from '../../../../../../../../../../styles';
+import {GRADIENTS} from '../../../../../../../../../../styles';
 
 interface Props {
   event: Todo;
@@ -18,35 +18,45 @@ interface State {
 
 const EVENT_PADDING = 2;
 
-const Container = glamorous.div<{hour: number, duration: number, isDragging: boolean}>({
-  backgroundImage: GRADIENTS.blue,
-  borderRadius: 4,
-  color: 'white',
-  cursor: '-webkit-grab',
-  display: 'flex',
-  left: 22,
-  padding: 8,
-  pointerEvents: 'visible',
-  position: 'absolute',
-  width: 'calc(100% - 24px)',
-}, ({hour, duration, isDragging}) => ({
-  height: duration - EVENT_PADDING,
-  opacity: isDragging ? 0 : 1,
-  transform: isDragging ? 'scale(0.95)' : 'scale(1)',
-  transition: isDragging ? 'opacity 0.15s, transform 0.15s' : 'opacity 0.15s',
-  top: hour * 60 + EVENT_PADDING,
-}));
+const Container = glamorous.div<{
+  hour: number;
+  duration: number;
+  isDragging: boolean;
+}>(
+  {
+    backgroundImage: GRADIENTS.blue,
+    borderRadius: 4,
+    color: 'white',
+    cursor: '-webkit-grab',
+    display: 'flex',
+    left: 22,
+    padding: 8,
+    pointerEvents: 'visible',
+    position: 'absolute',
+    width: 'calc(100% - 24px)',
+  },
+  ({hour, duration, isDragging}) => ({
+    height: duration - EVENT_PADDING,
+    opacity: isDragging ? 0 : 1,
+    transform: isDragging ? 'scale(0.95)' : 'scale(1)',
+    transition: isDragging ? 'opacity 0.15s, transform 0.15s' : 'opacity 0.15s',
+    top: hour * 60 + EVENT_PADDING,
+  })
+);
 
-const Button = glamorous.button({
-  border: '2px solid white',
-  borderRadius: '100%',
-  height: 16,
-  marginRight: 8,
-  padding: 0,
-  width: 16,
-}, ({complete}: {complete: boolean}) => ({
-  background: complete ? 'white' : 'transparent',
-}));
+const Button = glamorous.button(
+  {
+    border: '2px solid white',
+    borderRadius: '100%',
+    height: 16,
+    marginRight: 8,
+    padding: 0,
+    width: 16,
+  },
+  ({complete}: {complete: boolean}) => ({
+    background: complete ? 'white' : 'transparent',
+  })
+);
 
 const Title = glamorous.p({
   fontSize: 12,
@@ -64,7 +74,11 @@ export default class Event extends React.Component<Props, State> {
     const {isDragging} = this.state;
 
     if (event.startTime == null) {
-      console.warn(`Event with id ${event.id} tried to render on calendar despite not having a start time`);
+      console.warn(
+        `Event with id ${
+          event.id
+        } tried to render on calendar despite not having a start time`
+      );
       return null;
     }
 
@@ -77,7 +91,7 @@ export default class Event extends React.Component<Props, State> {
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
         duration={event.duration}
-        hour={startTime.getHours() + (startTime.getMinutes() / 60)}
+        hour={startTime.getHours() + startTime.getMinutes() / 60}
       >
         <Button
           complete={event.markedAsDone}

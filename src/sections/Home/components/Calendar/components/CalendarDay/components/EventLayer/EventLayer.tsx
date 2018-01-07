@@ -1,6 +1,6 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import { Todo } from '../../../../../../../../types';
+import {Todo} from '../../../../../../../../types';
 
 import Event from './components/Event';
 
@@ -20,7 +20,12 @@ const Container = glamorous.div({
   zIndex: 3,
 });
 
-export default function EventLayer({events, onDragEnd, onDragStart, onTodoCheckboxClick}: Props) {
+export default function EventLayer({
+  events,
+  onDragEnd,
+  onDragStart,
+  onTodoCheckboxClick,
+}: Props) {
   const eventsMarkup = events.map((event) => (
     <Event
       key={event.id}
@@ -31,9 +36,5 @@ export default function EventLayer({events, onDragEnd, onDragStart, onTodoCheckb
     />
   ));
 
-  return (
-    <Container>
-      {eventsMarkup}
-    </Container>
-  );
+  return <Container>{eventsMarkup}</Container>;
 }

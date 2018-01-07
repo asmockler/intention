@@ -19,18 +19,16 @@ export default class DragLayer extends React.Component<Props, never> {
   render() {
     const {date, onDrop} = this.props;
 
-    const hours = Array(24 * 4).fill(null).map((_, index) => (
-      <Dropzone
-        key={index}
-        date={new Date(date.valueOf() + index * 15 * 60000)}
-        onDrop={onDrop}
-      />
-    ));
+    const hours = Array(24 * 4)
+      .fill(null)
+      .map((_, index) => (
+        <Dropzone
+          key={index}
+          date={new Date(date.valueOf() + index * 15 * 60000)}
+          onDrop={onDrop}
+        />
+      ));
 
-    return (
-      <Container>
-        {hours}
-      </Container>
-    );
+    return <Container>{hours}</Container>;
   }
 }

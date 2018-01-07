@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 
 export interface UpdateTodoTimeMutationProps {
   updateTodoTime(id: string, date: Date): any;
@@ -17,7 +17,9 @@ export const updateTodoTimeMutation = gql`
 export default graphql(updateTodoTimeMutation, {
   props: ({mutate}): UpdateTodoTimeMutationProps => ({
     updateTodoTime(id: string, startTime: Date) {
-      if (mutate == null) { return; }
+      if (mutate == null) {
+        return;
+      }
 
       return mutate({
         variables: {id, startTime},
@@ -30,6 +32,6 @@ export default graphql(updateTodoTimeMutation, {
           },
         },
       });
-    }
+    },
   }),
 });

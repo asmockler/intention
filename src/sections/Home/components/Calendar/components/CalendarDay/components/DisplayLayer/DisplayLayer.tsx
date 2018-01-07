@@ -19,15 +19,13 @@ const Hour = glamorous.p({
 });
 
 export default function DisplayLayer() {
-  const hours = Array(24).fill(null).map((_, index) => (
-    <HourContainer key={index}>
-      <Hour>{index < 10 ? `0${index}` : index}</Hour>
-    </HourContainer>
-  ));
+  const hours = Array(24)
+    .fill(null)
+    .map((_, index) => (
+      <HourContainer key={index}>
+        <Hour>{index < 10 ? `0${index}` : index}</Hour>
+      </HourContainer>
+    ));
 
-  return (
-    <div>
-      {hours}
-    </div>
-  );
+  return <div>{hours}</div>;
 }

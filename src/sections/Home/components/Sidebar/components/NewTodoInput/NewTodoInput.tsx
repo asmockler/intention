@@ -4,7 +4,11 @@ import glamorous from 'glamorous';
 export interface Props {
   value: string;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
-  onSubmit(event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>): void;
+  onSubmit(
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement>
+  ): void;
 }
 
 interface ButtonProps {
@@ -30,20 +34,19 @@ const Input = glamorous.input({
   },
 });
 
-const Button = glamorous.button<ButtonProps>({
-  fontSize: 20,
-  position: 'absolute',
-  right: 0,
-  top: 10,
-}, ({visible}) => ({
-  display: visible ? 'block' : 'none',
-}));
+const Button = glamorous.button<ButtonProps>(
+  {
+    fontSize: 20,
+    position: 'absolute',
+    right: 0,
+    top: 10,
+  },
+  ({visible}) => ({
+    display: visible ? 'block' : 'none',
+  })
+);
 
-export default function NewTodoInput({
-  value,
-  onChange,
-  onSubmit,
-}: Props) {
+export default function NewTodoInput({value, onChange, onSubmit}: Props) {
   return (
     <Container>
       <form onSubmit={onSubmit}>
@@ -53,11 +56,7 @@ export default function NewTodoInput({
           type="text"
           value={value}
         />
-        <Button
-          onClick={onSubmit}
-          type="submit"
-          visible={value.length > 0}
-        >
+        <Button onClick={onSubmit} type="submit" visible={value.length > 0}>
           &rarr;
         </Button>
       </form>
