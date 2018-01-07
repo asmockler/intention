@@ -14,6 +14,7 @@ export const createTodoMutation = gql`
       title
       duration
       markedAsDone
+      startTime
     }
   }
 `;
@@ -35,6 +36,7 @@ export default graphql(createTodoMutation, {
             title,
             duration: duration == null ? 15 : duration,
             markedAsDone: false,
+            startTime: null,
           },
         },
         update: (proxy, result) => {
