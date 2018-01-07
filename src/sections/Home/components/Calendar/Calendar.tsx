@@ -5,6 +5,7 @@ import {Todo} from '../../../../types';
 
 import {CALENDAR_CONTROL_HEIGHT} from './styles';
 
+import KeydownListener from '../../../../components/KeydownListener';
 import CalendarDay from './components/CalendarDay';
 
 const NUM_DAYS_VISIBLE = 3;
@@ -135,6 +136,15 @@ export default class Calendar extends React.Component<Props, State> {
 
     return (
       <Container>
+        <KeydownListener
+          keys={['ArrowLeft']}
+          onKeypress={this.handlePreviousClick}
+        />
+        <KeydownListener
+          keys={['ArrowRight']}
+          onKeypress={this.handleNextClick}
+        />
+
         <ControlsContainer>
           <Button onClick={this.handlePreviousClick}>&larr;</Button>
           <Button onClick={this.handleTodayClick} small>
