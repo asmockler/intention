@@ -74,6 +74,7 @@ export default class Event extends React.Component<Props, State> {
     const {isDragging} = this.state;
 
     if (event.startTime == null) {
+      // eslint-disable-next-line no-console
       console.warn(
         `Event with id ${
           event.id

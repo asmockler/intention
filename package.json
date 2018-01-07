@@ -27,13 +27,21 @@
     "@types/react": "^16.0.28",
     "@types/react-dom": "^16.0.3",
     "@types/react-router-dom": "^4.2.3",
-    "react-scripts-ts": "2.8.0"
+    "eslint": "^4.15.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-graphql": "^1.4.1",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-typescript": "^0.8.1",
+    "react-scripts-ts": "2.8.0",
+    "typescript-eslint-parser": "^11.0.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "lint": "eslint --ext .tsx,.ts src/**"
   },
   "prettier": {
     "arrowParens": "always",
