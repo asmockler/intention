@@ -13,10 +13,10 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": ".",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
       "*": [
-        "*"
+        "src/*"
       ]
     },
     "allowSyntheticDefaultImports": true,
