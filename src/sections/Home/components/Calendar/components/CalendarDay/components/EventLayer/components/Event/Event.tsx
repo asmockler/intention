@@ -24,13 +24,13 @@ const Container = glamorous.div<{
   isDragging: boolean;
 }>(
   {
+    alignItems: 'center',
     backgroundImage: GRADIENTS.blue,
     borderRadius: 4,
     color: 'white',
     cursor: '-webkit-grab',
     display: 'flex',
     left: 22,
-    padding: 8,
     pointerEvents: 'visible',
     position: 'absolute',
     width: 'calc(100% - 24px)',
@@ -38,6 +38,7 @@ const Container = glamorous.div<{
   ({hour, duration, isDragging}) => ({
     height: duration - EVENT_PADDING,
     opacity: isDragging ? 0 : 1,
+    padding: duration > 30 ? 8 : '0 8px',
     transform: isDragging ? 'scale(0.95)' : 'scale(1)',
     transition: isDragging ? 'opacity 0.15s, transform 0.15s' : 'opacity 0.15s',
     top: hour * 60 + EVENT_PADDING,
