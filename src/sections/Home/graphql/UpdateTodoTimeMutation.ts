@@ -35,9 +35,6 @@ export default graphql(updateTodoTimeMutation, {
         update: (proxy, result) => {
           const {data: {updateTodo}} = result as any;
 
-          // console.log('data', data);
-          // console.log('proxy', proxy);
-
           const dataProxy = proxy.readQuery<ResponseData>({
             query: allTodosQuery,
           });
