@@ -24,26 +24,30 @@ const Container = glamorous.div<{
   isDragging: boolean;
 }>(
   {
-    alignItems: 'center',
     backgroundImage: GRADIENTS.blue,
     borderRadius: 4,
     color: 'white',
     cursor: '-webkit-grab',
-    display: 'flex',
     left: 22,
     pointerEvents: 'visible',
     position: 'absolute',
     width: 'calc(100% - 24px)',
   },
   ({hour, duration, isDragging}) => ({
+    padding: duration > 30 ? 8 : '6px 8px',
     height: duration - EVENT_PADDING,
     opacity: isDragging ? 0 : 1,
-    padding: duration > 30 ? 8 : '0 8px',
     transform: isDragging ? 'scale(0.95)' : 'scale(1)',
     transition: isDragging ? 'opacity 0.15s, transform 0.15s' : 'opacity 0.15s',
     top: hour * 60 + EVENT_PADDING,
   })
 );
+
+const Content = glamorous.div({
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'row',
+});
 
 const Button = glamorous.button(
   {
@@ -95,11 +99,13 @@ export default class Event extends React.Component<Props, State> {
         duration={event.duration}
         hour={startTime.getHours() + startTime.getMinutes() / 60}
       >
-        <Button
-          complete={event.markedAsDone}
-          onClick={this.handleTodoCheckboxClick}
-        />
-        <Title>{event.title}</Title>
+        <Content>
+          <Button
+            complete={event.markedAsDone}
+            onClick={this.handleTodoCheckboxClick}
+          />
+          <Title>{event.title}</Title>
+        </Content>
       </Container>
     );
   }
