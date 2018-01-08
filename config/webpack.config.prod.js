@@ -42,7 +42,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+    {publicPath: Array(cssFilename.split('/').length).join('../')}
   : {};
 
 // This is the production configuration.
@@ -67,7 +67,7 @@ module.exports = {
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
-    devtoolModuleFilenameTemplate: info =>
+    devtoolModuleFilenameTemplate: (info) =>
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
@@ -99,7 +99,6 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -124,7 +123,7 @@ module.exports = {
       // It's important to do this before Typescript runs.
       {
         test: /\.(ts|tsx)$/,
-        loader: require.resolve('tslint-loader'),
+        loader: require.resolve('eslint-loader'),
         enforce: 'pre',
         include: paths.appSrc,
       },
@@ -153,7 +152,7 @@ module.exports = {
           {
             test: /\.(ts|tsx)$/,
             include: paths.appSrc,
-            loader: require.resolve('ts-loader')
+            loader: require.resolve('ts-loader'),
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.

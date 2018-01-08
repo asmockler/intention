@@ -17,6 +17,7 @@ module.exports = {
   },
 
   rules: {
+    'no-console': 1,
     'no-undef': 0,
     'no-unused-vars': 2,
     'typescript/no-unused-vars': 2,
