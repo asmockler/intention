@@ -3,7 +3,8 @@ import glamorous from 'glamorous';
 import bind from 'utilities/bind';
 import {Todo} from 'types';
 
-import {GRADIENTS} from 'styles';
+import OuterContainer from './components/OuterContainer';
+import InnerContainer from './components/InnerContainer';
 
 interface Props {
   event: Todo;
@@ -15,33 +16,6 @@ interface Props {
 interface State {
   isDragging: boolean;
 }
-
-const EVENT_PADDING = 2;
-
-const Container = glamorous.div<{
-  hour: number;
-  duration: number;
-  isDragging: boolean;
-}>(
-  {
-    backgroundImage: GRADIENTS.blue,
-    borderRadius: 4,
-    color: 'white',
-    cursor: '-webkit-grab',
-    left: 22,
-    pointerEvents: 'visible',
-    position: 'absolute',
-    width: 'calc(100% - 24px)',
-  },
-  ({hour, duration, isDragging}) => ({
-    padding: duration > 30 ? 8 : '6px 8px',
-    height: duration - EVENT_PADDING,
-    opacity: isDragging ? 0 : 1,
-    transform: isDragging ? 'scale(0.95)' : 'scale(1)',
-    transition: isDragging ? 'opacity 0.15s, transform 0.15s' : 'opacity 0.15s',
-    top: hour * 60 + EVENT_PADDING,
-  })
-);
 
 const Content = glamorous.div({
   alignItems: 'center',
@@ -66,6 +40,7 @@ const Button = glamorous.button(
 const Title = glamorous.p({
   fontSize: 12,
   fontWeight: 'bold',
+  lineHeight: 0,
   margin: 0,
 });
 
@@ -91,22 +66,23 @@ export default class Event extends React.Component<Props, State> {
     const startTime = new Date(event.startTime);
 
     return (
-      <Container
+      <OuterContainer
         isDragging={isDragging}
-        draggable={true}
         onDragStart={this.handleDragStart}
         onDragEnd={this.handleDragEnd}
         duration={event.duration}
         hour={startTime.getHours() + startTime.getMinutes() / 60}
       >
-        <Content>
-          <Button
-            complete={event.markedAsDone}
-            onClick={this.handleTodoCheckboxClick}
-          />
-          <Title>{event.title}</Title>
-        </Content>
-      </Container>
+        <InnerContainer slim={event.duration < 30}>
+          <Content>
+            <Button
+              complete={event.markedAsDone}
+              onClick={this.handleTodoCheckboxClick}
+            />
+            <Title>{event.title}</Title>
+          </Content>
+        </InnerContainer>
+      </OuterContainer>
     );
   }
 
