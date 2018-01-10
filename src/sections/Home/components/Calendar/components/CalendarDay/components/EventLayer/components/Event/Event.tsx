@@ -44,6 +44,23 @@ const Title = glamorous.p({
   margin: 0,
 });
 
+interface DragHandleProps {
+  location: 'top' | 'bottom';
+}
+const DragHandle = glamorous.div<DragHandleProps>(
+  {
+    background: 'transparent',
+    cursor: 'ns-resize',
+    height: 5,
+    position: 'absolute',
+    width: '100%',
+  },
+  ({location}) => ({
+    bottom: location === 'bottom' ? 1 : 'auto',
+    top: location === 'top' ? 1 : 'auto',
+  })
+);
+
 export default class Event extends React.Component<Props, State> {
   state: State = {
     isDragging: false,
@@ -74,6 +91,7 @@ export default class Event extends React.Component<Props, State> {
         hour={startTime.getHours() + startTime.getMinutes() / 60}
       >
         <InnerContainer slim={event.duration < 30}>
+          <DragHandle location="top" />
           <Content>
             <Button
               complete={event.markedAsDone}
@@ -81,6 +99,7 @@ export default class Event extends React.Component<Props, State> {
             />
             <Title>{event.title}</Title>
           </Content>
+          <DragHandle location="bottom" />
         </InnerContainer>
       </OuterContainer>
     );
